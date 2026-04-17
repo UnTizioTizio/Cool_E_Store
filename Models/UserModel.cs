@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoolEStore.Models;
 
+[Index(nameof(Email), nameof(PhoneNumber), IsUnique = true)]
 public class UserModel
 {
     public int Id { get; set; }
@@ -10,7 +12,7 @@ public class UserModel
     [EmailAddress]
     public required string Email { get; set; }
     
-    [StringLength(50, MinimumLength = 8)]
+    [StringLength(20, MinimumLength = 8)]
     public required string Password { get; set; }
 
     [Phone]
