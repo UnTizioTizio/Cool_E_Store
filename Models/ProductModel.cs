@@ -13,8 +13,15 @@ public class ProductModel
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public decimal FinalPrice { get; set; }
     public string? Description { get; set; }
-    public string Category { get; set; } = null!;
-    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public float AvgReviewStars { get; set; }
+    public ProductCategory Category { get; set; }
     public int VendorId { get; set; }
+}
+
+public enum ProductCategory
+{
+    Books,
+    Electronics,
+    Comics,
+    Movies,
+    Videogames
 }
