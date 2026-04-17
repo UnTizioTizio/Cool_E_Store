@@ -1,0 +1,20 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace CoolEStore.Models;
+
+public class UserModel
+{
+    public int Id { get; set; }
+    public required string Username { get; set; }
+    
+    [EmailAddress]
+    public required string Email { get; set; }
+    
+    [StringLength(50, MinimumLength = 8)]
+    public required string Password { get; set; }
+
+    [Phone]
+    public required string PhoneNumber { get; set; }
+
+    public required string Address { get; set; }
+}
