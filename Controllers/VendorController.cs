@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: Vendor
         public async Task<IActionResult> Index()
         {
-            return View(await _context.VendorModel.ToListAsync());
+            return View(await _context.Vendors.ToListAsync());
         }
 
         // GET: Vendor/Details/5
@@ -33,7 +33,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var vendorModel = await _context.VendorModel
+            var vendorModel = await _context.Vendors
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {
@@ -73,7 +73,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var vendorModel = await _context.VendorModel.FindAsync(id);
+            var vendorModel = await _context.Vendors.FindAsync(id);
             if (vendorModel == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var vendorModel = await _context.VendorModel
+            var vendorModel = await _context.Vendors
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {
@@ -139,10 +139,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var vendorModel = await _context.VendorModel.FindAsync(id);
+            var vendorModel = await _context.Vendors.FindAsync(id);
             if (vendorModel != null)
             {
-                _context.VendorModel.Remove(vendorModel);
+                _context.Vendors.Remove(vendorModel);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace CoolEStore.Controllers
 
         private bool VendorModelExists(int id)
         {
-            return _context.VendorModel.Any(e => e.Id == id);
+            return _context.Vendors.Any(e => e.Id == id);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: Review
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.ReviewModel.Include(r => r.Product).Include(r => r.User);
+            var appDbContext = _context.Reviews.Include(r => r.Product).Include(r => r.User);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var reviewModel = await _context.ReviewModel
+            var reviewModel = await _context.Reviews
                 .Include(r => r.Product)
                 .Include(r => r.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -49,8 +49,8 @@ namespace CoolEStore.Controllers
         // GET: Review/Create
         public IActionResult Create()
         {
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id");
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace CoolEStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id", reviewModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", reviewModel.UserId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", reviewModel.ProductId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", reviewModel.UserId);
             return View(reviewModel);
         }
 
@@ -80,13 +80,13 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var reviewModel = await _context.ReviewModel.FindAsync(id);
+            var reviewModel = await _context.Reviews.FindAsync(id);
             if (reviewModel == null)
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id", reviewModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", reviewModel.UserId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", reviewModel.ProductId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", reviewModel.UserId);
             return View(reviewModel);
         }
 
@@ -122,8 +122,8 @@ namespace CoolEStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id", reviewModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", reviewModel.UserId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", reviewModel.ProductId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", reviewModel.UserId);
             return View(reviewModel);
         }
 
@@ -135,7 +135,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var reviewModel = await _context.ReviewModel
+            var reviewModel = await _context.Reviews
                 .Include(r => r.Product)
                 .Include(r => r.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,10 +152,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reviewModel = await _context.ReviewModel.FindAsync(id);
+            var reviewModel = await _context.Reviews.FindAsync(id);
             if (reviewModel != null)
             {
-                _context.ReviewModel.Remove(reviewModel);
+                _context.Reviews.Remove(reviewModel);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace CoolEStore.Controllers
 
         private bool ReviewModelExists(int id)
         {
-            return _context.ReviewModel.Any(e => e.Id == id);
+            return _context.Reviews.Any(e => e.Id == id);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: WarehouseRecord
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.WarehouseRecordModel.Include(w => w.Product).Include(w => w.Vendor);
+            var appDbContext = _context.WarehouseRecords.Include(w => w.Product).Include(w => w.Vendor);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var warehouseRecordModel = await _context.WarehouseRecordModel
+            var warehouseRecordModel = await _context.WarehouseRecords
                 .Include(w => w.Product)
                 .Include(w => w.Vendor)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -49,8 +49,8 @@ namespace CoolEStore.Controllers
         // GET: WarehouseRecord/Create
         public IActionResult Create()
         {
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id");
-            ViewData["VendorId"] = new SelectList(_context.VendorModel, "Id", "Id");
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "Id", "Id");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace CoolEStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id", warehouseRecordModel.ProductId);
-            ViewData["VendorId"] = new SelectList(_context.VendorModel, "Id", "Id", warehouseRecordModel.VendorId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", warehouseRecordModel.ProductId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "Id", "Id", warehouseRecordModel.VendorId);
             return View(warehouseRecordModel);
         }
 
@@ -80,13 +80,13 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var warehouseRecordModel = await _context.WarehouseRecordModel.FindAsync(id);
+            var warehouseRecordModel = await _context.WarehouseRecords.FindAsync(id);
             if (warehouseRecordModel == null)
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id", warehouseRecordModel.ProductId);
-            ViewData["VendorId"] = new SelectList(_context.VendorModel, "Id", "Id", warehouseRecordModel.VendorId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", warehouseRecordModel.ProductId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "Id", "Id", warehouseRecordModel.VendorId);
             return View(warehouseRecordModel);
         }
 
@@ -122,8 +122,8 @@ namespace CoolEStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.ProductModel, "Id", "Id", warehouseRecordModel.ProductId);
-            ViewData["VendorId"] = new SelectList(_context.VendorModel, "Id", "Id", warehouseRecordModel.VendorId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", warehouseRecordModel.ProductId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "Id", "Id", warehouseRecordModel.VendorId);
             return View(warehouseRecordModel);
         }
 
@@ -135,7 +135,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var warehouseRecordModel = await _context.WarehouseRecordModel
+            var warehouseRecordModel = await _context.WarehouseRecords
                 .Include(w => w.Product)
                 .Include(w => w.Vendor)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,10 +152,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var warehouseRecordModel = await _context.WarehouseRecordModel.FindAsync(id);
+            var warehouseRecordModel = await _context.WarehouseRecords.FindAsync(id);
             if (warehouseRecordModel != null)
             {
-                _context.WarehouseRecordModel.Remove(warehouseRecordModel);
+                _context.WarehouseRecords.Remove(warehouseRecordModel);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace CoolEStore.Controllers
 
         private bool WarehouseRecordModelExists(int id)
         {
-            return _context.WarehouseRecordModel.Any(e => e.Id == id);
+            return _context.WarehouseRecords.Any(e => e.Id == id);
         }
     }
 }

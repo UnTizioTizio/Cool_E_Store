@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: Order
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.OrderModel.Include(o => o.User);
+            var appDbContext = _context.Orders.Include(o => o.User);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var orderModel = await _context.OrderModel
+            var orderModel = await _context.Orders
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (orderModel == null)
@@ -48,7 +48,7 @@ namespace CoolEStore.Controllers
         // GET: Order/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace CoolEStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", orderModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", orderModel.UserId);
             return View(orderModel);
         }
 
@@ -77,12 +77,12 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var orderModel = await _context.OrderModel.FindAsync(id);
+            var orderModel = await _context.Orders.FindAsync(id);
             if (orderModel == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", orderModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", orderModel.UserId);
             return View(orderModel);
         }
 
@@ -118,7 +118,7 @@ namespace CoolEStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", orderModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", orderModel.UserId);
             return View(orderModel);
         }
 
@@ -130,7 +130,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var orderModel = await _context.OrderModel
+            var orderModel = await _context.Orders
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (orderModel == null)
@@ -146,10 +146,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var orderModel = await _context.OrderModel.FindAsync(id);
+            var orderModel = await _context.Orders.FindAsync(id);
             if (orderModel != null)
             {
-                _context.OrderModel.Remove(orderModel);
+                _context.Orders.Remove(orderModel);
             }
 
             await _context.SaveChangesAsync();
@@ -158,7 +158,7 @@ namespace CoolEStore.Controllers
 
         private bool OrderModelExists(int id)
         {
-            return _context.OrderModel.Any(e => e.Id == id);
+            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }

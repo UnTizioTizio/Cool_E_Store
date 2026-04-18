@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProductModel.ToListAsync());
+            return View(await _context.Products.ToListAsync());
         }
 
         // GET: Product/Details/5
@@ -33,7 +33,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var productModel = await _context.ProductModel
+            var productModel = await _context.Products
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (productModel == null)
             {
@@ -73,7 +73,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var productModel = await _context.ProductModel.FindAsync(id);
+            var productModel = await _context.Products.FindAsync(id);
             if (productModel == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var productModel = await _context.ProductModel
+            var productModel = await _context.Products
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (productModel == null)
             {
@@ -139,10 +139,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productModel = await _context.ProductModel.FindAsync(id);
+            var productModel = await _context.Products.FindAsync(id);
             if (productModel != null)
             {
-                _context.ProductModel.Remove(productModel);
+                _context.Products.Remove(productModel);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace CoolEStore.Controllers
 
         private bool ProductModelExists(int id)
         {
-            return _context.ProductModel.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }
