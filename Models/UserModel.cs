@@ -18,5 +18,7 @@ public class UserModel
     [Phone]
     public required string PhoneNumber { get; set; }
 
+    public required uint CAP { get; set; }
     public required string Address { get; set; }
+    public required ushort StreetNumber { get; set; }
 }
