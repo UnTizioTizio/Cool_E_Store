@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoolEStore.Models;
 
@@ -15,6 +16,7 @@ public class OrderModel
     public required int ShoppingBasketRecordId { get; set; }
     public required ShoppingBasketRecordModel ShoppingBasketRecord;
 
+    [ForeignKey("User")]
     public required int UserId { get; set; }
     public required UserModel User { get; set; }
 }
