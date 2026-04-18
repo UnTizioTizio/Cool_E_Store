@@ -1,0 +1,164 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using CoolEStore.Data;
+using CoolEStore.Models;
+
+namespace CoolEStore.Controllers
+{
+    public class OrderController : Controller
+    {
+        private readonly AppDbContext _context;
+
+        public OrderController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Order
+        public async Task<IActionResult> Index()
+        {
+            var appDbContext = _context.OrderModel.Include(o => o.User);
+            return View(await appDbContext.ToListAsync());
+        }
+
+        // GET: Order/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderModel = await _context.OrderModel
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (orderModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(orderModel);
+        }
+
+        // GET: Order/Create
+        public IActionResult Create()
+        {
+            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id");
+            return View();
+        }
+
+        // POST: Order/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,StartDeliveryDate,EstimatedDeliveryArrival,ShoppingBasketRecordId,UserId")] OrderModel orderModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(orderModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", orderModel.UserId);
+            return View(orderModel);
+        }
+
+        // GET: Order/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderModel = await _context.OrderModel.FindAsync(id);
+            if (orderModel == null)
+            {
+                return NotFound();
+            }
+            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", orderModel.UserId);
+            return View(orderModel);
+        }
+
+        // POST: Order/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,StartDeliveryDate,EstimatedDeliveryArrival,ShoppingBasketRecordId,UserId")] OrderModel orderModel)
+        {
+            if (id != orderModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(orderModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderModelExists(orderModel.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["UserId"] = new SelectList(_context.UserModel, "Id", "Id", orderModel.UserId);
+            return View(orderModel);
+        }
+
+        // GET: Order/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderModel = await _context.OrderModel
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (orderModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(orderModel);
+        }
+
+        // POST: Order/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var orderModel = await _context.OrderModel.FindAsync(id);
+            if (orderModel != null)
+            {
+                _context.OrderModel.Remove(orderModel);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool OrderModelExists(int id)
+        {
+            return _context.OrderModel.Any(e => e.Id == id);
+        }
+    }
+}
