@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CoolEStore.Models;
 
-public class WarehouseRecord
+public class WarehouseRecordModel
 {
     public int Id { get; set; }
 
