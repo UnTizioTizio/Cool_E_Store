@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: Vendor
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vendors.ToListAsync());
+            return View(await _context.Vendor.ToListAsync());
         }
 
         // GET: Vendor/Details/5
@@ -33,7 +33,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var vendorModel = await _context.Vendors
+            var vendorModel = await _context.Vendor
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {
@@ -73,7 +73,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var vendorModel = await _context.Vendors.FindAsync(id);
+            var vendorModel = await _context.Vendor.FindAsync(id);
             if (vendorModel == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var vendorModel = await _context.Vendors
+            var vendorModel = await _context.Vendor
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {
@@ -139,10 +139,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var vendorModel = await _context.Vendors.FindAsync(id);
+            var vendorModel = await _context.Vendor.FindAsync(id);
             if (vendorModel != null)
             {
-                _context.Vendors.Remove(vendorModel);
+                _context.Vendor.Remove(vendorModel);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace CoolEStore.Controllers
 
         private bool VendorModelExists(int id)
         {
-            return _context.Vendors.Any(e => e.Id == id);
+            return _context.Vendor.Any(e => e.Id == id);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: User
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
         // GET: User/Details/5
@@ -33,7 +33,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.Users
+            var userModel = await _context.User
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userModel == null)
             {
@@ -73,7 +73,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.Users.FindAsync(id);
+            var userModel = await _context.User.FindAsync(id);
             if (userModel == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.Users
+            var userModel = await _context.User
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userModel == null)
             {
@@ -139,10 +139,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userModel = await _context.Users.FindAsync(id);
+            var userModel = await _context.User.FindAsync(id);
             if (userModel != null)
             {
-                _context.Users.Remove(userModel);
+                _context.User.Remove(userModel);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace CoolEStore.Controllers
 
         private bool UserModelExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.User.Any(e => e.Id == id);
         }
     }
 }

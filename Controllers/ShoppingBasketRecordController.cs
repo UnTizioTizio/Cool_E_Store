@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: ShoppingBasketRecord
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.ShoppingBasketRecords.Include(s => s.Product).Include(s => s.User);
+            var appDbContext = _context.ShoppingBasketRecord.Include(s => s.Product).Include(s => s.User);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var shoppingBasketRecordModel = await _context.ShoppingBasketRecords
+            var shoppingBasketRecordModel = await _context.ShoppingBasketRecord
                 .Include(s => s.Product)
                 .Include(s => s.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -49,8 +49,8 @@ namespace CoolEStore.Controllers
         // GET: ShoppingBasketRecord/Create
         public IActionResult Create()
         {
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace CoolEStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", shoppingBasketRecordModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", shoppingBasketRecordModel.UserId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", shoppingBasketRecordModel.ProductId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", shoppingBasketRecordModel.UserId);
             return View(shoppingBasketRecordModel);
         }
 
@@ -80,13 +80,13 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var shoppingBasketRecordModel = await _context.ShoppingBasketRecords.FindAsync(id);
+            var shoppingBasketRecordModel = await _context.ShoppingBasketRecord.FindAsync(id);
             if (shoppingBasketRecordModel == null)
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", shoppingBasketRecordModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", shoppingBasketRecordModel.UserId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", shoppingBasketRecordModel.ProductId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", shoppingBasketRecordModel.UserId);
             return View(shoppingBasketRecordModel);
         }
 
@@ -122,8 +122,8 @@ namespace CoolEStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", shoppingBasketRecordModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", shoppingBasketRecordModel.UserId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", shoppingBasketRecordModel.ProductId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", shoppingBasketRecordModel.UserId);
             return View(shoppingBasketRecordModel);
         }
 
@@ -135,7 +135,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var shoppingBasketRecordModel = await _context.ShoppingBasketRecords
+            var shoppingBasketRecordModel = await _context.ShoppingBasketRecord
                 .Include(s => s.Product)
                 .Include(s => s.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,10 +152,10 @@ namespace CoolEStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var shoppingBasketRecordModel = await _context.ShoppingBasketRecords.FindAsync(id);
+            var shoppingBasketRecordModel = await _context.ShoppingBasketRecord.FindAsync(id);
             if (shoppingBasketRecordModel != null)
             {
-                _context.ShoppingBasketRecords.Remove(shoppingBasketRecordModel);
+                _context.ShoppingBasketRecord.Remove(shoppingBasketRecordModel);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace CoolEStore.Controllers
 
         private bool ShoppingBasketRecordModelExists(int id)
         {
-            return _context.ShoppingBasketRecords.Any(e => e.Id == id);
+            return _context.ShoppingBasketRecord.Any(e => e.Id == id);
         }
     }
 }
