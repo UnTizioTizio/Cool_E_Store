@@ -24,6 +24,14 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<ProductModel>()
             .Property(p => p.FinalPrice)
-            .HasComputedColumnSql("[BasePrice] * (1 - IFNULL([Sales], 0) / 100.0)");       
+            .HasComputedColumnSql("[BasePrice] * (1 - IFNULL([Sales], 0) / 100.0)");
+
+        // Converts the ProductCategory enum to string and vice versa
+        modelBuilder.Entity<ProductModel>()
+            .Property(p => p.Category)
+            .HasConversion(
+                c => c.ToString(),
+                c => (ProductCategory)Enum.Parse(typeof(ProductCategory), c)
+            ); 
     }
 }

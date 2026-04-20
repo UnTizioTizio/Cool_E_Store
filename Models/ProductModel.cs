@@ -13,14 +13,14 @@ public class ProductModel
     public byte? Sales { get; set; }
     
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public required decimal FinalPrice { get; set; }
+    public decimal FinalPrice { get; set; }
     
     public string? Description { get; set; }
     public required ProductCategory Category { get; set; }
     
     [ForeignKey("Vendor")]
     public required int VendorId { get; set; }
-    public required VendorModel Vendor { get; set; }
+    public VendorModel? Vendor { get; set; }
 }
 
 public enum ProductCategory

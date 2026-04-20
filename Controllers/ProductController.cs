@@ -54,7 +54,7 @@ namespace CoolEStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BasePrice,Sales,FinalPrice,Description,Category,VendorId")] ProductModel productModel)
+        public async Task<IActionResult> Create([Bind("Id,Name,BasePrice,Sales,Description,Category,VendorId")] ProductModel productModel)
         {
             if (ModelState.IsValid)
             {
