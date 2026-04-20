@@ -7,14 +7,17 @@ public class WarehouseRecordModel
 {
     public int Id { get; set; }
 
+    [Required]
     [Range(1, uint.MaxValue)]
-    public required int Amount { get; set; }
+    public int Amount { get; set; }
 
+    [Required]
     [ForeignKey("Product")]
-    public required int ProductId { get; set; }
-    public required ProductModel Product { get; set; }
+    public int ProductId { get; set; }
+    public ProductModel? Product { get; set; }
 
+    [Required]
     [ForeignKey("Vendor")]
-    public required int VendorId { get; set; }
-    public required VendorModel Vendor { get; set; }
+    public int VendorId { get; set; }
+    public VendorModel? Vendor { get; set; }
 }

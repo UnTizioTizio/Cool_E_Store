@@ -6,20 +6,30 @@ namespace CoolEStore.Models;
 public class ProductModel
 {
     public int Id { get; set; }
-    public required string Name { get; set; }
-    public required decimal BasePrice { get; set; }
     
-    [Range(1, 100)]
+    [Required]
+    [MaxLength(100)]
+    public required string Name { get; set; }
+    
+    [Required]
+    [Column(TypeName = "DECIMAL(18, 2)")]
+    public decimal BasePrice { get; set; }
+    
+    [Range(0, 100)]
     public byte? Sales { get; set; }
     
+    [Column(TypeName = "DECIMAL(18, 2)")]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public decimal FinalPrice { get; set; }
     
     public string? Description { get; set; }
-    public required ProductCategory Category { get; set; }
     
+    [Required]
+    public ProductCategory Category { get; set; }
+    
+    [Required]
     [ForeignKey("Vendor")]
-    public required int VendorId { get; set; }
+    public int VendorId { get; set; }
     public VendorModel? Vendor { get; set; }
 }
 

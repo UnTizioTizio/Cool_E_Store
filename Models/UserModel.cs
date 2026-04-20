@@ -7,18 +7,28 @@ namespace CoolEStore.Models;
 public class UserModel
 {
     public int Id { get; set; }
+    
+    [Required]
+    [MaxLength(50), MinLength(3)]
     public required string Username { get; set; }
     
+    [Required]
     [EmailAddress]
     public required string Email { get; set; }
     
-    [StringLength(20, MinimumLength = 8)]
+    [Required]
     public required string Password { get; set; }
 
+    [Required]
     [Phone]
     public required string PhoneNumber { get; set; }
 
-    public required uint CAP { get; set; }
+    [Required]
+    public uint CAP { get; set; }
+
+    [Required]
     public required string Address { get; set; }
-    public required ushort StreetNumber { get; set; }
+    
+    [Required]
+    public ushort StreetNumber { get; set; }
 }

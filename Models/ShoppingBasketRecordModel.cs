@@ -7,17 +7,21 @@ public class ShoppingBasketRecordModel
 {
     public int Id { get; set; }
     
+    [Required]
     [Range(1, uint.MaxValue)]
-    public required uint Amount;
+    public uint Amount;
 
+    [Required]
     [DataType(DataType.Date)]
     public required DateTime RegistrationDate;
 
+    [Required]
     [ForeignKey("Product")]
-    public required int ProductId { get; set; }
-    public required ProductModel Product { get; set; }
+    public int ProductId { get; set; }
+    public ProductModel? Product { get; set; }
 
+    [Required]
     [ForeignKey("User")]
-    public required int UserId { get; set; }
-    public required UserModel User { get; set; }
+    public int UserId { get; set; }
+    public UserModel? User { get; set; }
 }

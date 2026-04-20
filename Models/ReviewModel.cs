@@ -7,17 +7,20 @@ public class ReviewModel
 {
     public int Id { get; set; }
     
+    [Required]
     [Range(1, 5)]
-    public required byte NStars { get; set; }
+    public byte NStars { get; set; }
     
     public string? Title { get; set; }
     public string? Comment { get; set;}
 
+    [Required]
     [ForeignKey("User")]
-    public required int UserId { get; set; }
-    public required UserModel User { get; set; }
+    public int UserId { get; set; }
+    public UserModel? User { get; set; }
 
+    [Required]
     [ForeignKey("Product")]
-    public required int ProductId { get; set; }
-    public required ProductModel Product { get; set; }
+    public int ProductId { get; set; }
+    public ProductModel? Product { get; set; }
 }

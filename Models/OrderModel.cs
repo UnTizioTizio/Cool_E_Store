@@ -7,16 +7,21 @@ public class OrderModel
 {
     public int Id { get; set; }
     
+    [Required]
     [DataType(DataType.Date)]
     public required DateTime StartDeliveryDate { get; set; }
 
+    [Required]
     [DataType(DataType.Date)]
     public required DateTime EstimatedDeliveryArrival { get; set; }
 
-    public required int ShoppingBasketRecordId { get; set; }
-    public required ShoppingBasketRecordModel ShoppingBasketRecord;
+    [Required]
+    [ForeignKey("ShoppingBasketRecord")]
+    public int ShoppingBasketRecordId { get; set; }
+    public ShoppingBasketRecordModel? ShoppingBasketRecord;
 
+    [Required]
     [ForeignKey("User")]
-    public required int UserId { get; set; }
-    public required UserModel User { get; set; }
+    public int UserId { get; set; }
+    public UserModel? User { get; set; }
 }
