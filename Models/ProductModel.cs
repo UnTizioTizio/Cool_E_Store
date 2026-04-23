@@ -16,7 +16,7 @@ public class ProductModel
     public decimal BasePrice { get; set; }
     
     [Range(0, 100)]
-    public byte? Discount { get; set; }
+    public byte Discount { get; set; }
     
     [Column(TypeName = "DECIMAL(18, 2)")]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

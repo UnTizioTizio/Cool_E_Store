@@ -39,7 +39,7 @@ namespace CoolEStore.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("CoolEStore.Models.ProductModel", b =>
@@ -78,7 +78,7 @@ namespace CoolEStore.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("CoolEStore.Models.ReviewModel", b =>
@@ -108,7 +108,7 @@ namespace CoolEStore.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Review", (string)null);
                 });
 
             modelBuilder.Entity("CoolEStore.Models.ShoppingBasketRecordModel", b =>
@@ -129,7 +129,7 @@ namespace CoolEStore.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ShoppingBasketRecord");
+                    b.ToTable("ShoppingBasketRecord", (string)null);
                 });
 
             modelBuilder.Entity("CoolEStore.Models.UserModel", b =>
@@ -170,7 +170,7 @@ namespace CoolEStore.Migrations
                     b.HasIndex("Email", "PhoneNumber")
                         .IsUnique();
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("CoolEStore.Models.VendorModel", b =>
@@ -211,7 +211,7 @@ namespace CoolEStore.Migrations
                     b.HasIndex("Email", "PhoneNumber")
                         .IsUnique();
 
-                    b.ToTable("Vendor");
+                    b.ToTable("Vendor", (string)null);
                 });
 
             modelBuilder.Entity("CoolEStore.Models.WarehouseRecordModel", b =>
@@ -235,7 +235,7 @@ namespace CoolEStore.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("WarehouseRecord");
+                    b.ToTable("WarehouseRecord", (string)null);
                 });
 
             modelBuilder.Entity("CoolEStore.Models.OrderModel", b =>
