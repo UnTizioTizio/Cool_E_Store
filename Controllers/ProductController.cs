@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolEStore.Data;
 using CoolEStore.Models;
+using CoolEStore.ViewModels;
 
 namespace CoolEStore.Controllers
 {
@@ -24,6 +25,34 @@ namespace CoolEStore.Controllers
         {
             return View(await _context.Product.ToListAsync());
         }
+
+        public async Task<IActionResult> Test()
+        {
+            List<ProductModel> products = await _context.Product
+                .Include(p => p.Vendor)
+                .Include(p => p.Reviews)
+                .AsSplitQuery()
+                .ToListAsync();
+            List<ProductCardViewModel> productCards = new List<ProductCardViewModel>(products.Count);
+            for(int i = 0; i < products.Count; i++)
+            {
+                productCards.Add(
+                    new ProductCardViewModel
+                    {
+                        Id = products[i].Id,
+                        Name = products[i].Name,
+                        BasePrice = products[i].BasePrice,
+                        Discount = products[i].Discount,
+                        FinalPrice = products[i].FinalPrice,
+                        Description = products[i].Description,
+                        Category = products[i].Category,
+                        Vendor = products[i].Vendor,
+                        Reviews = products[i].Reviews
+                    }
+                );
+            }
+            return View(productCards);
+        } 
 
         // GET: Product/Details/5
         public async Task<IActionResult> Details(int? id)

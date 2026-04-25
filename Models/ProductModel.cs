@@ -31,6 +31,8 @@ public class ProductModel
     [ForeignKey("Vendor")]
     public int VendorId { get; set; }
     public VendorModel? Vendor { get; set; }
+
+    public List<ReviewModel>? Reviews { get; set; }
 }
 
 public enum ProductCategory
