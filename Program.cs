@@ -17,6 +17,10 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     SeedData.Initialize(services);
+    using (var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>())
+    {
+        appDbContext.Database.EnsureCreated();
+    }
 }
 
 // Configure the HTTP request pipeline.
