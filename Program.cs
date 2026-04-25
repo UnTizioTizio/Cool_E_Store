@@ -13,15 +13,11 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Seed Database
-using (var scope = app.Services.CreateScope())
+using (var appDbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>())
 {
-    var services = scope.ServiceProvider;
-    SeedData.Initialize(services);
-    using (var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>())
-    {
-        appDbContext.Database.EnsureCreated();
-    }
+    appDbContext.Database.EnsureCreated();
 }
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
