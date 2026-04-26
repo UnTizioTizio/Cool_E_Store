@@ -12,8 +12,7 @@ public class ProductCardViewModel
     public string? Description { get; set; }
     public ProductCategory Category { get; set; }
     
-    public VendorModel? Vendor { get; set; }
-
+    public VendorModel Vendor { get; set; } = null!;
     public List<ReviewModel>? Reviews { get; set; }
 
     public float AvgReviews 
