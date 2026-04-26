@@ -23,8 +23,7 @@ public class ProductCardViewModel
                 return 0;
 
             int avg = 0;
-            foreach(ReviewModel rev in Reviews)
-                avg += rev.NStars;
+            Reviews.ForEach(review => avg += review.NStars);
             return (float)avg / Reviews.Count;
         }
     }
