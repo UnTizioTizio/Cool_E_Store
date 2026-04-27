@@ -48,7 +48,7 @@ namespace CoolEStore.Controllers
                     Reviews = product.Reviews
                 }
             ));
-            return View(productCards);
+            return View(productCards.GroupBy(p => p.Category));
         } 
 
         // GET: Product/Details/5

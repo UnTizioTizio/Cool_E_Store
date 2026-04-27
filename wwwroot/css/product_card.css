@@ -1,0 +1,16 @@
+.product-card-container
+{
+    display: flex;
+    /* overflow-x: auto;
+    overflow-y: hidden; */
+    flex-wrap: wrap;
+    min-height: 20rem;
+}
+
+.product-card
+{
+    width: 15rem;
+    min-width: 15rem;
+    height: 90%;
+}
+

@@ -1,83 +1,38 @@
-@model IEnumerable<CoolEStore.ViewModels.ProductCardViewModel>
+@using CoolEStore.ViewModels
+@* @model IEnumerable<CoolEStore.ViewModels.ProductCardViewModel> *@
+@model IEnumerable<IGrouping<ProductCategory, ProductCardViewModel>>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BasePrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FinalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vendor.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AvgReviews)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumReviews)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BasePrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vendor.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvgReviews)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumReviews)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<h1>Test</h1>
+@foreach(var group in Model)
+{
+    <h3>@group.Key</h3>
+    <section class="product-card-container">
+        @foreach(var item in group)
+        {
+            <div class="product-card mx-3">
+                <div class="align-items-end" style="margin-top: 50%;">
+                    <div>
+                        @if(item.Discount == 0)
+                        {
+                            <span class="fs-4 fw-bold">@item.BasePrice €</span> 
+                        }
+                        else
+                        {
+                            <span class="fw-light text-decoration-line-through">@item.BasePrice €</span>
+                            <span class="fs-4 fw-bold">&nbsp;@item.FinalPrice €</span>
+                        }
+                    </div>
+                    <div class="fs-5">@item.Name</div>
+                    <div class="align-items-end">
+                        <div class="fs-6 mt-1">@item.Vendor.Name</div>
+                        <div>@item.AvgReviews/5 (@item.NumReviews)</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </section>
 }
-    </tbody>
-</table>
