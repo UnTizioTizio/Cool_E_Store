@@ -23,11 +23,6 @@ namespace CoolEStore.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
-        }
-
-        public async Task<IActionResult> Test()
-        {
             List<ProductModel> products = await _context.Product
                 .Include(p => p.Vendor)
                 .Include(p => p.Reviews)
@@ -86,7 +81,7 @@ namespace CoolEStore.Controllers
             {
                 _context.Add(productModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Debug));
             }
             return View(productModel);
         }
@@ -137,7 +132,7 @@ namespace CoolEStore.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Debug));
             }
             return View(productModel);
         }
@@ -172,12 +167,17 @@ namespace CoolEStore.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Debug));
         }
 
         private bool ProductModelExists(int id)
         {
             return _context.Product.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> Debug()
+        {
+            return View(await _context.Product.ToListAsync());
         }
     }
 }
