@@ -3,6 +3,7 @@ using System;
 using CoolEStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolEStore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260427143412_FixedFinalPriceComputedColumn")]
+    partial class FixedFinalPriceComputedColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.6");
@@ -64,7 +67,7 @@ namespace CoolEStore.Migrations
                     b.Property<decimal>("FinalPrice")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("DECIMAL(18, 2)")
-                        .HasComputedColumnSql("ROUND([BasePrice] * (1 - IFNULL([Discount], 0) / 100.0), 2)");
+                        .HasComputedColumnSql("CAST([BasePrice] * (1 - IFNULL([Discount], 0) / 100.0) AS DECIMAL(18,2))");
 
                     b.Property<string>("Name")
                         .IsRequired()
