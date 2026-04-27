@@ -17,10 +17,10 @@ public class ReviewModel
     [Required]
     [ForeignKey("User")]
     public int UserId { get; set; }
-    public UserModel User { get; set; } = null!;
+    public UserModel? User { get; set; }
 
     [Required]
     [ForeignKey("Product")]
     public int ProductId { get; set; }
-    public ProductModel Product { get; set; } = null!;
+    public ProductModel? Product { get; set; }
 }

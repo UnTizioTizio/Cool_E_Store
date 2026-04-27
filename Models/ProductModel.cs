@@ -30,7 +30,7 @@ public class ProductModel
     [Required]
     [ForeignKey("Vendor")]
     public int VendorId { get; set; }
-    public VendorModel Vendor { get; set; } = null!;
+    public VendorModel? Vendor { get; set; }
 
     public List<ReviewModel>? Reviews { get; set; }
 }

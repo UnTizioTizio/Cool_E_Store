@@ -14,10 +14,10 @@ public class WarehouseRecordModel
     [Required]
     [ForeignKey("Product")]
     public int ProductId { get; set; }
-    public ProductModel Product { get; set; } = null!;
+    public ProductModel? Product { get; set; }
 
     [Required]
     [ForeignKey("Vendor")]
     public int VendorId { get; set; }
-    public VendorModel Vendor { get; set; } = null!;
+    public VendorModel? Vendor { get; set; }
 }
