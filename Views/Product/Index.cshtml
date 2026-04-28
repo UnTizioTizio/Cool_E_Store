@@ -1,12 +1,12 @@
 @using CoolEStore.ViewModels
-@model IEnumerable<IGrouping<ProductCategory, ProductCardViewModel>>
+@model IEnumerable<IGrouping<ProductCategory, ProductViewModel>>
 
 @{
     ViewData["Title"] = "Homepage";
 }
 
 <h1>Test</h1>
-@foreach(IGrouping<ProductCategory, ProductCardViewModel> group in Model)
+@foreach(IGrouping<ProductCategory, ProductViewModel> group in Model)
 {
     <hr>
     <h3 class="mt-3">@group.Key</h3>
@@ -40,7 +40,6 @@
                         <div class="align-items-end">
                             <div class="fs-6 mt-1">@item.Vendor.Name</div>
                             <div>@item.AvgReviews/5 (@item.NumReviews)</div>
-                            <div>@item.Amount</div>
                         </div>
                     </div>
                 </div>

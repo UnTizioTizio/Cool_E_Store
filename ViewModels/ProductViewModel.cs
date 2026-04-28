@@ -3,7 +3,7 @@ using CoolEStore.Models;
 
 namespace CoolEStore.ViewModels;
 
-public class ProductCardViewModel
+public class ProductViewModel
 {
     public int Id { get; set; }
     public required string Name { get; set; }

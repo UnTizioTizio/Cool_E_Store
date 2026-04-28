@@ -29,9 +29,9 @@ namespace CoolEStore.Controllers
                 .Include(p => p.Reviews)
                 .AsSplitQuery()
                 .ToListAsync();
-            List<ProductCardViewModel> productCards = new List<ProductCardViewModel>(products.Count);
-            products.ForEach(product => productCards.Add(
-                new ProductCardViewModel
+            List<ProductViewModel> productViewModel = new List<ProductViewModel>(products.Count);
+            products.ForEach(product => productViewModel.Add(
+                new ProductViewModel
                 {
                     Id = product.Id,
                     Name = product.Name,
@@ -47,7 +47,7 @@ namespace CoolEStore.Controllers
                                 .Select(wr => wr.Amount).FirstOrDefault(0)
                 }
             ));
-            return View(productCards.GroupBy(p => p.Category));
+            return View(productViewModel.GroupBy(p => p.Category));
         } 
 
         // GET: Product/Details/5
