@@ -8,39 +8,42 @@
 <h1>Test</h1>
 @foreach(IGrouping<ProductCategory, ProductCardViewModel> group in Model)
 {
+    <hr>
     <h3 class="mt-3">@group.Key</h3>
     <section class="product-card-container">
         @foreach(var item in group)
         {
-            <div class="product-card mx-3">
-                <div class="align-items-end" style="margin-top: 50%;">
-                    <div>
-                        @if(item.Discount == 0)
-                        {
-                            <span class="fs-4 fw-bold">
-                                @Html.DisplayFor(modelItem => item.BasePrice)
-                            </span> 
-                        }
-                        else
-                        {
-                            <span class="fs-4 fw-bold">
-                                @Html.DisplayFor(modelItem => item.FinalPrice)
-                            </span>
-                            <span class="fw-light text-decoration-line-through">
-                                @Html.DisplayFor(modelItem => item.BasePrice)
-                            </span>
-                            <span class="fw-bold text-danger">
-                                (@Html.DisplayFor(modelItem => item.Discount))
-                            </span>
-                        }
-                    </div>
-                    <div class="fs-5">@item.Name</div>
-                    <div class="align-items-end">
-                        <div class="fs-6 mt-1">@item.Vendor.Name</div>
-                        <div>@item.AvgReviews/5 (@item.NumReviews)</div>
+            <a class="product-card-link" asp-action="Details" asp-route-id="@item.Id">
+                <div class="product-card mx-3">
+                    <div class="align-items-end" style="margin-top: 50%;">
+                        <div>
+                            @if(item.Discount == 0)
+                            {
+                                <span class="fs-4 fw-bold">
+                                    @Html.DisplayFor(modelItem => item.BasePrice)
+                                </span> 
+                            }
+                            else
+                            {
+                                <span class="fs-4 fw-bold">
+                                    @Html.DisplayFor(modelItem => item.FinalPrice)
+                                </span>
+                                <span class="fw-light text-decoration-line-through">
+                                    @Html.DisplayFor(modelItem => item.BasePrice)
+                                </span>
+                                <span class="fw-bold text-danger">
+                                    (@Html.DisplayFor(modelItem => item.Discount))
+                                </span>
+                            }
+                        </div>
+                        <div class="fs-5">@item.Name</div>
+                        <div class="align-items-end">
+                            <div class="fs-6 mt-1">@item.Vendor.Name</div>
+                            <div>@item.AvgReviews/5 (@item.NumReviews)</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         }
     </section>
 }

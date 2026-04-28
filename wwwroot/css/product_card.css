@@ -1,3 +1,15 @@
+.product-card-link,
+.product-card-link:visited
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-card-link:hover
+{
+    background-color: #dfdfdf81;
+}
+
 .product-card-container
 {
     display: flex;
