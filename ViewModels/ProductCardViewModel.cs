@@ -23,16 +23,15 @@ public class ProductCardViewModel
     public VendorModel Vendor { get; set; } = null!;
     public List<ReviewModel>? Reviews { get; set; }
     
+    public int Amount { get; set; }
     public float AvgReviews 
     { 
         get 
         {
             if(Reviews == null || Reviews.Count == 0)
                 return 0;
-
-            int avg = 0;
-            Reviews.ForEach(review => avg += review.NStars);
-            return MathF.Round((float)avg / Reviews.Count, 1);
+            
+            return (float)Math.Round(Reviews.Average(r => r.NStars), 1);
         }
     }
     public int NumReviews 

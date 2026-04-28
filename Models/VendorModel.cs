@@ -32,4 +32,6 @@ public class VendorModel
     
     [Required]
     public ushort StreetNumber { get; set; }
+
+    public List<WarehouseRecordModel>? WarehouseRecords { get; set; }
 }

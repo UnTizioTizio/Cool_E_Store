@@ -25,6 +25,7 @@ namespace CoolEStore.Controllers
         {
             List<ProductModel> products = await _context.Product
                 .Include(p => p.Vendor)
+                    .ThenInclude(v => v.WarehouseRecords)
                 .Include(p => p.Reviews)
                 .AsSplitQuery()
                 .ToListAsync();
@@ -40,7 +41,10 @@ namespace CoolEStore.Controllers
                     Description = product.Description,
                     Category = product.Category,
                     Vendor = product.Vendor,
-                    Reviews = product.Reviews
+                    Reviews = product.Reviews,
+                    Amount = product.Vendor.WarehouseRecords
+                                .Where(wr => wr.Id == product.Id)
+                                .Select(wr => wr.Amount).FirstOrDefault(0)
                 }
             ));
             return View(productCards.GroupBy(p => p.Category));

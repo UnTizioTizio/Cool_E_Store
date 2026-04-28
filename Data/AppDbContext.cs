@@ -99,6 +99,7 @@ public class AppDbContext : DbContext
 
             ProductModel[] products =
             {
+/* ========================== Videogames ========================== */
                 new ProductModel
                 {
                     Name = "The Legend of Zelda: Twilight Princess",
@@ -143,6 +144,7 @@ public class AppDbContext : DbContext
                     Category = ProductCategory.Videogames,
                     Vendor = vendors[1]
                 },
+/* ========================== Movies ========================== */
                 new ProductModel
                 {
                     Name = "Inglourious Basterds",
@@ -181,6 +183,7 @@ public class AppDbContext : DbContext
                     Category = ProductCategory.Movies,
                     Vendor = vendors[0]
                 },
+/* ========================== Books ========================== */
                 new ProductModel
                 {
                     Name = "1984",
@@ -241,6 +244,98 @@ public class AppDbContext : DbContext
                 }
             };
 
+            Random rand = new Random();
+            WarehouseRecordModel[] warehouseRecords =
+            {
+/* ========================== Videogames ========================== */
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[0],
+                    Vendor = vendors[1]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[1],
+                    Vendor = vendors[1]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[2],
+                    Vendor = vendors[1]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[3],
+                    Vendor = vendors[1]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[4],
+                    Vendor = vendors[1]
+                },
+/* ========================== Movies ========================== */
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[5],
+                    Vendor = vendors[0]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[6],
+                    Vendor = vendors[0]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[7],
+                    Vendor = vendors[0]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[8],
+                    Vendor = vendors[0]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[9],
+                    Vendor = vendors[0]
+                },
+/* ========================== Books ========================== */
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[10],
+                    Vendor = vendors[2]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[11],
+                    Vendor = vendors[2]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[12],
+                    Vendor = vendors[2]
+                },
+                new WarehouseRecordModel
+                {
+                    Amount = (int)rand.NextInt64(5, 9999),
+                    Product = products[13],
+                    Vendor = vendors[2]
+                }
+            };
+
             AppDbContext appDbContext = (AppDbContext)context;
             
             if(!appDbContext.Set<VendorModel>().Any()) 
@@ -254,6 +349,9 @@ public class AppDbContext : DbContext
             
             if(!appDbContext.Set<ReviewModel>().Any())
                 appDbContext.Review.AddRange(reviews);
+
+            if(!appDbContext.Set<WarehouseRecordModel>().Any())
+                appDbContext.WarehouseRecord.AddRange(warehouseRecords);
 
             appDbContext.SaveChanges();
         });
