@@ -127,10 +127,66 @@ public class AppDbContext : DbContext
                 },
                 new ProductModel
                 {
+                    Name = "Outer Wilds",
+                    BasePrice = 24.99m,
+                    Discount = 8,
+                    Description = "A fantastic space journey awaits you",
+                    Category = ProductCategory.Videogames,
+                    Vendor = vendors[1]
+                },
+                new ProductModel
+                {
+                    Name = "Hollow Knight: Silksong",
+                    BasePrice = 19.99m,
+                    Discount = 13,
+                    Description = "Very cute, also very dark",
+                    Category = ProductCategory.Videogames,
+                    Vendor = vendors[1]
+                },
+                new ProductModel
+                {
                     Name = "Inglourious Basterds",
                     BasePrice = 9.99m,
                     Category = ProductCategory.Movies,
                     Vendor = vendors[0]
+                },
+                new ProductModel
+                {
+                    Name = "Cast Away",
+                    BasePrice = 9.99m,
+                    Discount = 4,
+                    Category = ProductCategory.Movies,
+                    Vendor = vendors[0]
+                },
+                new ProductModel
+                {
+                    Name = "Interstellar",
+                    BasePrice = 13.99m,
+                    Category = ProductCategory.Movies,
+                    Vendor = vendors[0]
+                },
+                new ProductModel
+                {
+                    Name = "The Truman Show",
+                    BasePrice = 8.59m,
+                    Discount = 5,
+                    Category = ProductCategory.Movies,
+                    Vendor = vendors[0]
+                },
+                new ProductModel
+                {
+                    Name = "Fight Club",
+                    BasePrice = 9.99m,
+                    Discount = 7,
+                    Category = ProductCategory.Movies,
+                    Vendor = vendors[0]
+                },
+                new ProductModel
+                {
+                    Name = "1984",
+                    BasePrice = 11.87m,
+                    Category = ProductCategory.Books,
+                    Vendor = vendors[2]
                 },
                 new ProductModel
                 {
@@ -139,7 +195,28 @@ public class AppDbContext : DbContext
                     Discount = 13,
                     Category = ProductCategory.Books,
                     Vendor = vendors[2]
-                }
+                },
+                new ProductModel
+                {
+                    Name = "C# 14 in a Nutshell",
+                    BasePrice = 60.22m,
+                    Discount = 22,
+                    Description = "This book is a must-have if you want to learn C# in 2026",
+                    Category = ProductCategory.Books,
+                    Vendor = vendors[2]
+                },
+                new ProductModel
+                {
+                    Name = "The Art of Game Design: A Book of Lenses, Third Edition",
+                    BasePrice = 72.49m,
+                    Discount = 2,
+                    Description = @"The Art of Game Design guides you through the design process step-by-step, 
+                    helping you to develop new and innovative games that will be played again and again. It 
+                    explains the fundamental principles of game design and demonstrates how tactics used in 
+                    classic board, card and athletic games also work in top-quality video games.",
+                    Category = ProductCategory.Books,
+                    Vendor = vendors[2]
+                },
             };
 
             ReviewModel[] reviews =
