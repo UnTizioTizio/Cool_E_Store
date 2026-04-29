@@ -79,9 +79,9 @@ namespace CoolEStore.Controllers
                 FinalPrice = product.FinalPrice,
                 Description = product.Description,
                 Category = product.Category,
-                Vendor = product.Vendor,
+                Vendor = product.Vendor!,
                 Reviews = product.Reviews,
-                Amount = product.Vendor.WarehouseRecords
+                Amount = product.Vendor!.WarehouseRecords!
                             .Where(wr => wr.Id == product.Id)
                             .Select(wr => wr.Amount)
                             .FirstOrDefault(0)
