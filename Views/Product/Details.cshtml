@@ -1,60 +1,72 @@
-@model CoolEStore.Models.ProductModel
+@model CoolEStore.ViewModels.ProductViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
+<hr>
+<section class="d-flex justify-content-evenly">
+    <div class="ms-2 me-5" style="width: 37.5%;">
+        <img src="/favicon.ico" alt="img">
+    </div>
+    <div class="w-25">
+        <div>
+            <span class="fs-2 fw-bolder">
+                @Html.DisplayFor(model => model.Name)
+            </span>
+        </div>
+        <div>
+            @if(Model.Discount == 0)
+            {
+                <span class="fs-4 fw-bold">
+                    @Html.DisplayFor(model => model.BasePrice)
+                </span>
+            }
+            else
+            {
+                <span class="fs-4 text-danger">
+                    @Html.DisplayFor(model => model.Discount)
+                </span>
+                <span class="fs-4 fw-bold">
+                    @Html.DisplayFor(model => model.FinalPrice)
+                </span>
+                <div class="fw-light">
+                    Base price: 
+                    <span class="text-decoration-line-through">
+                        @Html.DisplayFor(model => model.BasePrice)
+                    </span>
+                </div>
+            }
+        </div>
+        @if(Model.Description != null && Model.Description.Length > 0)
+        {
+            <hr>
+            <div>
+                <h6>Description</h6>
+                <span>
+                    @Html.DisplayFor(model => model.Description)
+                </span>
+            </div>
+        }
+    </div>
+</section>
+<hr>
+<section>
+    @for(int nStars = 5; nStars > 0; nStars--)
+    {
+        int countNStars = (Model.NumReviews > 0)
+            ? Model.Reviews!.Count(r => r.NStars == nStars)
+            : 0;
+        int starsPercent = (Model.NumReviews > 0)
+            ? (int)((float)countNStars / Model.NumReviews * 100)
+            : 0;
 
-<div>
-    <h4>ProductModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BasePrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BasePrice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Discount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Discount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FinalPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FinalPrice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VendorId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VendorId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+        <div style="width: 37.5%;">
+            <span>@nStars</span>
+            <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="@starsPercent" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar bg-warning" style="width: @starsPercent%"></div>
+            </div>
+        </div>
+    }
+</section>

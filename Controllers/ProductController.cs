@@ -23,12 +23,13 @@ namespace CoolEStore.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            List<ProductModel> products = await _context.Product
+            var products = await _context.Product
                 .Include(p => p.Vendor)
-                    .ThenInclude(v => v.WarehouseRecords)
+                    .ThenInclude(v => v!.WarehouseRecords)
                 .Include(p => p.Reviews)
                 .AsSplitQuery()
                 .ToListAsync();
+
             List<ProductViewModel> productViewModel = new List<ProductViewModel>(products.Count);
             products.ForEach(product => productViewModel.Add(
                 new ProductViewModel
@@ -40,11 +41,12 @@ namespace CoolEStore.Controllers
                     FinalPrice = product.FinalPrice,
                     Description = product.Description,
                     Category = product.Category,
-                    Vendor = product.Vendor,
+                    Vendor = product.Vendor!,
                     Reviews = product.Reviews,
-                    Amount = product.Vendor.WarehouseRecords
+                    Amount = product.Vendor!.WarehouseRecords!
                                 .Where(wr => wr.Id == product.Id)
-                                .Select(wr => wr.Amount).FirstOrDefault(0)
+                                .Select(wr => wr.Amount)
+                                .FirstOrDefault(0)
                 }
             ));
             return View(productViewModel.GroupBy(p => p.Category));
@@ -58,14 +60,34 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var productModel = await _context.Product
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (productModel == null)
+            var product = await _context.Product
+                .Include(p => p.Vendor)
+                    .ThenInclude(v => v!.WarehouseRecords)
+                .Include(p => p.Reviews)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(productModel);
+            ProductViewModel productViewModel = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                BasePrice = product.BasePrice,
+                Discount = product.Discount,
+                FinalPrice = product.FinalPrice,
+                Description = product.Description,
+                Category = product.Category,
+                Vendor = product.Vendor,
+                Reviews = product.Reviews,
+                Amount = product.Vendor.WarehouseRecords
+                            .Where(wr => wr.Id == product.Id)
+                            .Select(wr => wr.Amount)
+                            .FirstOrDefault(0)
+            };
+
+            return View(productViewModel);
         }
 
         // GET: Product/Create
