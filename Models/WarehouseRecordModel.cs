@@ -8,7 +8,7 @@ public class WarehouseRecordModel
     public int Id { get; set; }
 
     [Required]
-    [Range(1, uint.MaxValue)]
+    [Range(0, int.MaxValue)]
     public int Amount { get; set; }
 
     [Required]
