@@ -15,6 +15,14 @@
             <span class="fs-2 fw-bolder">
                 @Html.DisplayFor(model => model.Name)
             </span>
+            @if(Model.Amount == 0)
+            {
+                <h2 class="text-danger fw-bolder">SOLD OUT :(</h2>
+            }
+            else if(Model.Amount <= 10)
+            {
+                <h2 class="text-danger fw-bolder">ONLY @Model.Amount LEFT!!!</h2>
+            }
         </div>
         <div>
             @if(Model.Discount == 0)
