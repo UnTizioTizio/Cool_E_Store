@@ -12,9 +12,14 @@
     </div>
     <div class="w-25">
         <div>
-            <span class="fs-2 fw-bolder">
+            <div class="fs-2 fw-bolder">
                 @Html.DisplayFor(model => model.Name)
-            </span>
+            </div>
+            <a asp-controller="Vendor" asp-action="Details" asp-route-id="@Model.Vendor.Id">
+                Visit the 
+                @Html.DisplayFor(model => model.Vendor.Name)
+                store
+            </a>
             @if(Model.Amount == 0)
             {
                 <h2 class="text-danger fw-bolder">SOLD OUT :(</h2>
