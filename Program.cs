@@ -2,13 +2,30 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CoolEStore.Data;
 using CoolEStore.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("AppDbContext") ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("AppDbContext") 
+        ?? 
+        throw new InvalidOperationException("Connection string 'AppDbContext' not found.")
+));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add Authentication
+builder.Services.AddAuthentication();
+
+// Add Identity APIs
+builder.Services
+    .AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
+
 
 var app = builder.Build();
 
@@ -17,7 +34,6 @@ using (var appDbContext = app.Services.CreateScope().ServiceProvider.GetRequired
 {
     appDbContext.Database.EnsureCreated();
 }
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -30,6 +46,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -39,5 +56,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapIdentityApi<IdentityUser>();
 
 app.Run();

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CoolEStore.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoolEStore.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<ProductModel> Product { get; set; } = default!;
     public DbSet<UserModel> User { get; set; } = default!;
@@ -22,6 +24,8 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        
         modelBuilder.Entity<ProductModel>()
             .Property(p => p.FinalPrice)
             .HasComputedColumnSql("ROUND([BasePrice] * (1 - IFNULL([Discount], 0) / 100.0), 2)");
