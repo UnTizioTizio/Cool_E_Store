@@ -11,12 +11,13 @@ namespace CoolEStore.Data;
 
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
-    public DbSet<ProductModel> Product { get; set; } = default!;
+    public DbSet<ApplicationUserModel> ApplicationUser { get; set; } = default!;
     public DbSet<UserModel> User { get; set; } = default!;
+    public DbSet<VendorModel> Vendor { get; set; } = default!;
+    public DbSet<ProductModel> Product { get; set; } = default!;
     public DbSet<OrderModel> Order { get; set; } = default!;
     public DbSet<ReviewModel> Review { get; set; } = default!;
     public DbSet<ShoppingBasketRecordModel> ShoppingBasketRecord { get; set; } = default!;
-    public DbSet<VendorModel> Vendor { get; set; } = default!;
     public DbSet<WarehouseRecordModel> WarehouseRecord { get; set; } = default!;
 
     public AppDbContext (DbContextOptions<AppDbContext> options)
@@ -43,62 +44,76 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         optionsBuilder.UseSeeding((context, _) =>
         {
-            VendorModel[] vendors =
+            ApplicationUserModel[] applicationUsers =
             {
-                new VendorModel
+                new ApplicationUserModel
                 {
-                    Name = "Absolute Cinema",
+                    UserName = "Admin_1",
+                    Email = "admin01@gmail.com",
+                    PasswordHash = "Password",
+                    PhoneNumber = "+397777777777",
+                    CAP = "33019",
+                    Address = "Via Dante",
+                    StreetNumber = 9,
+                    Type = UserType.Customer
+                },
+                new ApplicationUserModel
+                {
+                    UserName = "Admin_2",
+                    Email = "admin02@gmail.com",
+                    PasswordHash = "Password",
+                    PhoneNumber = "+394564564567",
+                    CAP = "94019",
+                    Address = "Via Umberto I",
+                    StreetNumber = 95,
+                    Type = UserType.Customer
+                },
+                new ApplicationUserModel
+                {
+                    UserName = "Absolute Cinema",
                     Email = "absolute.cinema@gmail.com",
-                    Password = "pipopa",
+                    PasswordHash = "pipopa",
                     PhoneNumber = "+393052165619",
                     CAP = "47012",
                     Address = "Via Bartolomeo II",
-                    StreetNumber = 37
+                    StreetNumber = 37,
+                    Type = UserType.Vendor
                 },
-                new VendorModel
+                new ApplicationUserModel
                 {
-                    Name = "Power Gaming",
+                    UserName = "Power Gaming",
                     Email = "pwrgaming@gmail.com",
-                    Password = "pipopa",
+                    PasswordHash = "pipopa",
                     PhoneNumber = "+39327723416",
                     CAP = "37045",
                     Address = "Corso Buenos Aires",
-                    StreetNumber = 2
+                    StreetNumber = 2,
+                    Type = UserType.Vendor
                 },
-                new VendorModel
+                new ApplicationUserModel
                 {
-                    Name = "Booking Smart",
+                    UserName = "Booking Smart",
                     Email = "booking.smart@gmail.com",
-                    Password = "pipopa",
+                    PasswordHash = "pipopa",
                     PhoneNumber = "+390964254011",
                     CAP = "44797",
                     Address = "Via Garibaldi",
-                    StreetNumber = 246
+                    StreetNumber = 246,
+                    Type = UserType.Vendor
                 }
+            };
+
+            VendorModel[] vendors =
+            {
+                new VendorModel{ ApplicationUser = applicationUsers[2] },
+                new VendorModel{ ApplicationUser = applicationUsers[3] },
+                new VendorModel{ ApplicationUser = applicationUsers[4] }
             };
 
             UserModel[] users =
             {
-                new UserModel
-                {
-                    Username = "Admin_1",
-                    Email = "admin01@gmail.com",
-                    Password = "Password",
-                    PhoneNumber = "+397777777777",
-                    CAP = "33019",
-                    Address = "Via Dante",
-                    StreetNumber = 9
-                },
-                new UserModel
-                {
-                    Username = "Admin_2",
-                    Email = "admin02@gmail.com",
-                    Password = "Password",
-                    PhoneNumber = "+394564564567",
-                    CAP = "94019",
-                    Address = "Via Umberto I",
-                    StreetNumber = 95
-                }
+                new UserModel{ ApplicationUser = applicationUsers[0] },
+                new UserModel{ ApplicationUser = applicationUsers[1] }
             };
 
             ProductModel[] products =
@@ -342,6 +357,9 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
 
             AppDbContext appDbContext = (AppDbContext)context;
             
+            if(!appDbContext.Set<ApplicationUserModel>().Any())
+                appDbContext.ApplicationUser.AddRange(applicationUsers);
+
             if(!appDbContext.Set<VendorModel>().Any()) 
                 appDbContext.Vendor.AddRange(vendors);
             
