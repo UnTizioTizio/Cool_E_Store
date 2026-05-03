@@ -27,17 +27,39 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
         
-        modelBuilder.Entity<ProductModel>()
+        var productModel = modelBuilder.Entity<ProductModel>();
+        
+        productModel
             .Property(p => p.FinalPrice)
             .HasComputedColumnSql("ROUND([BasePrice] * (1 - IFNULL([Discount], 0) / 100.0), 2)");
 
         // Converts the ProductCategory enum to string and vice versa
-        modelBuilder.Entity<ProductModel>()
+        productModel
             .Property(p => p.Category)
             .HasConversion(
                 c => c.ToString(),
                 c => (ProductCategory)Enum.Parse(typeof(ProductCategory), c)
-            ); 
+            );
+
+        var applicationUserModel = modelBuilder.Entity<ApplicationUserModel>();
+        
+        // Converts the UserType enum to string and vice versa
+        applicationUserModel
+            .Property(a => a.Type)
+            .IsRequired()
+            .HasConversion(
+                t => t.ToString(),
+                t => (UserType)Enum.Parse(typeof(UserType), t)
+            );
+
+        applicationUserModel
+            .HasIndex(a => new {a.Email, a.PhoneNumber})
+            .IsUnique();
+        
+        applicationUserModel.Property(a => a.Email).IsRequired();
+        applicationUserModel.Property(a => a.UserName).IsRequired();
+        applicationUserModel.Property(a => a.PhoneNumber).IsRequired();
+        applicationUserModel.Property(a => a.PasswordHash).IsRequired();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
