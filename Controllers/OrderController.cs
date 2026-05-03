@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: Order
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Order.Include(o => o.User);
+            var appDbContext = _context.Order.Include(o => o.Customer);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace CoolEStore.Controllers
             }
 
             var orderModel = await _context.Order
-                .Include(o => o.User)
+                .Include(o => o.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (orderModel == null)
             {
@@ -48,7 +48,7 @@ namespace CoolEStore.Controllers
         // GET: Order/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace CoolEStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", orderModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", orderModel.CustomerId);
             return View(orderModel);
         }
 
@@ -82,7 +82,7 @@ namespace CoolEStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", orderModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", orderModel.CustomerId);
             return View(orderModel);
         }
 
@@ -118,7 +118,7 @@ namespace CoolEStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", orderModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", orderModel.CustomerId);
             return View(orderModel);
         }
 
@@ -131,7 +131,7 @@ namespace CoolEStore.Controllers
             }
 
             var orderModel = await _context.Order
-                .Include(o => o.User)
+                .Include(o => o.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (orderModel == null)
             {

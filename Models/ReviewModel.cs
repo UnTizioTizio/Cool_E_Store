@@ -15,9 +15,9 @@ public class ReviewModel
     public string? Comment { get; set;}
 
     [Required]
-    [ForeignKey("User")]
-    public int UserId { get; set; }
-    public UserModel? User { get; set; }
+    [ForeignKey("Customer")]
+    public int CustomerId { get; set; }
+    public CustomerModel? Customer { get; set; }
 
     [Required]
     [ForeignKey("Product")]

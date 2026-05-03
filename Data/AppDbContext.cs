@@ -12,7 +12,7 @@ namespace CoolEStore.Data;
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<ApplicationUserModel> ApplicationUser { get; set; } = default!;
-    public DbSet<UserModel> User { get; set; } = default!;
+    public DbSet<CustomerModel> Customer { get; set; } = default!;
     public DbSet<VendorModel> Vendor { get; set; } = default!;
     public DbSet<ProductModel> Product { get; set; } = default!;
     public DbSet<OrderModel> Order { get; set; } = default!;
@@ -110,10 +110,10 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
                 new VendorModel{ ApplicationUser = applicationUsers[4] }
             };
 
-            UserModel[] users =
+            CustomerModel[] customers =
             {
-                new UserModel{ ApplicationUser = applicationUsers[0] },
-                new UserModel{ ApplicationUser = applicationUsers[1] }
+                new CustomerModel{ ApplicationUser = applicationUsers[0] },
+                new CustomerModel{ ApplicationUser = applicationUsers[1] }
             };
 
             ProductModel[] products =
@@ -246,19 +246,19 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
                 new ReviewModel
                 {
                     NStars = 4,
-                    User = users[0],
+                    Customer = customers[0],
                     Product = products[1]
                 },
                 new ReviewModel
                 {
                     NStars = 5,
-                    User = users[0],
+                    Customer = customers[0],
                     Product = products[0]
                 },
                 new ReviewModel
                 {
                     NStars = 2,
-                    User = users[1],
+                    Customer = customers[1],
                     Product = products[1]
                 }
             };
@@ -363,8 +363,8 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
             if(!appDbContext.Set<VendorModel>().Any()) 
                 appDbContext.Vendor.AddRange(vendors);
             
-            if(!appDbContext.Set<UserModel>().Any())
-                appDbContext.User.AddRange(users);
+            if(!appDbContext.Set<CustomerModel>().Any())
+                appDbContext.Customer.AddRange(customers);
             
             if(!appDbContext.Set<ProductModel>().Any())
                 appDbContext.Product.AddRange(products);

@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: Review
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Review.Include(r => r.Product).Include(r => r.User);
+            var appDbContext = _context.Review.Include(r => r.Product).Include(r => r.Customer);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -36,7 +36,7 @@ namespace CoolEStore.Controllers
 
             var reviewModel = await _context.Review
                 .Include(r => r.Product)
-                .Include(r => r.User)
+                .Include(r => r.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reviewModel == null)
             {
@@ -50,7 +50,7 @@ namespace CoolEStore.Controllers
         public IActionResult Create()
         {
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace CoolEStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", reviewModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", reviewModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", reviewModel.CustomerId);
             return View(reviewModel);
         }
 
@@ -86,7 +86,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", reviewModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", reviewModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", reviewModel.CustomerId);
             return View(reviewModel);
         }
 
@@ -123,7 +123,7 @@ namespace CoolEStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", reviewModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", reviewModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", reviewModel.CustomerId);
             return View(reviewModel);
         }
 
@@ -137,7 +137,7 @@ namespace CoolEStore.Controllers
 
             var reviewModel = await _context.Review
                 .Include(r => r.Product)
-                .Include(r => r.User)
+                .Include(r => r.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reviewModel == null)
             {

@@ -22,7 +22,7 @@ namespace CoolEStore.Controllers
         // GET: ShoppingBasketRecord
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.ShoppingBasketRecord.Include(s => s.Product).Include(s => s.User);
+            var appDbContext = _context.ShoppingBasketRecord.Include(s => s.Product).Include(s => s.Customer);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -36,7 +36,7 @@ namespace CoolEStore.Controllers
 
             var shoppingBasketRecordModel = await _context.ShoppingBasketRecord
                 .Include(s => s.Product)
-                .Include(s => s.User)
+                .Include(s => s.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (shoppingBasketRecordModel == null)
             {
@@ -50,7 +50,7 @@ namespace CoolEStore.Controllers
         public IActionResult Create()
         {
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace CoolEStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", shoppingBasketRecordModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", shoppingBasketRecordModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", shoppingBasketRecordModel.CustomerId);
             return View(shoppingBasketRecordModel);
         }
 
@@ -86,7 +86,7 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", shoppingBasketRecordModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", shoppingBasketRecordModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", shoppingBasketRecordModel.CustomerId);
             return View(shoppingBasketRecordModel);
         }
 
@@ -123,7 +123,7 @@ namespace CoolEStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", shoppingBasketRecordModel.ProductId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", shoppingBasketRecordModel.UserId);
+            ViewData["UserId"] = new SelectList(_context.Customer, "Id", "Id", shoppingBasketRecordModel.CustomerId);
             return View(shoppingBasketRecordModel);
         }
 
@@ -137,7 +137,7 @@ namespace CoolEStore.Controllers
 
             var shoppingBasketRecordModel = await _context.ShoppingBasketRecord
                 .Include(s => s.Product)
-                .Include(s => s.User)
+                .Include(s => s.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (shoppingBasketRecordModel == null)
             {

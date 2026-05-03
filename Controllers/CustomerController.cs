@@ -10,22 +10,23 @@ using CoolEStore.Models;
 
 namespace CoolEStore.Controllers
 {
-    public class UserController : Controller
+    public class CustomerController : Controller
     {
         private readonly AppDbContext _context;
 
-        public UserController(AppDbContext context)
+        public CustomerController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Customer
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            var appDbContext = _context.Customer.Include(c => c.ApplicationUser);
+            return View(await appDbContext.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Customer/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.User
+            var customerModel = await _context.Customer
+                .Include(c => c.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (userModel == null)
+            if (customerModel == null)
             {
                 return NotFound();
             }
 
-            return View(userModel);
+            return View(customerModel);
         }
 
-        // GET: User/Create
+        // GET: Customer/Create
         public IActionResult Create()
         {
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address");
             return View();
         }
 
-        // POST: User/Create
+        // POST: Customer/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Email,Password,PhoneNumber,CAP,Address,StreetNumber")] UserModel userModel)
+        public async Task<IActionResult> Create([Bind("Id,ApplicationUserId")] CustomerModel customerModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userModel);
+                _context.Add(customerModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(userModel);
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address", customerModel.ApplicationUserId);
+            return View(customerModel);
         }
 
-        // GET: User/Edit/5
+        // GET: Customer/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.User.FindAsync(id);
-            if (userModel == null)
+            var customerModel = await _context.Customer.FindAsync(id);
+            if (customerModel == null)
             {
                 return NotFound();
             }
-            return View(userModel);
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address", customerModel.ApplicationUserId);
+            return View(customerModel);
         }
 
-        // POST: User/Edit/5
+        // POST: Customer/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Email,Password,PhoneNumber,CAP,Address,StreetNumber")] UserModel userModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ApplicationUserId")] CustomerModel customerModel)
         {
-            if (id != userModel.Id)
+            if (id != customerModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace CoolEStore.Controllers
             {
                 try
                 {
-                    _context.Update(userModel);
+                    _context.Update(customerModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserModelExists(userModel.Id))
+                    if (!CustomerModelExists(customerModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace CoolEStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(userModel);
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address", customerModel.ApplicationUserId);
+            return View(customerModel);
         }
 
-        // GET: User/Delete/5
+        // GET: Customer/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +130,35 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.User
+            var customerModel = await _context.Customer
+                .Include(c => c.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (userModel == null)
+            if (customerModel == null)
             {
                 return NotFound();
             }
 
-            return View(userModel);
+            return View(customerModel);
         }
 
-        // POST: User/Delete/5
+        // POST: Customer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userModel = await _context.User.FindAsync(id);
-            if (userModel != null)
+            var customerModel = await _context.Customer.FindAsync(id);
+            if (customerModel != null)
             {
-                _context.User.Remove(userModel);
+                _context.Customer.Remove(customerModel);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserModelExists(int id)
+        private bool CustomerModelExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Customer.Any(e => e.Id == id);
         }
     }
 }

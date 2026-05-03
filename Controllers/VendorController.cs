@@ -22,7 +22,8 @@ namespace CoolEStore.Controllers
         // GET: Vendor
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vendor.ToListAsync());
+            var appDbContext = _context.Vendor.Include(v => v.ApplicationUser);
+            return View(await appDbContext.ToListAsync());
         }
 
         // GET: Vendor/Details/5
@@ -34,6 +35,7 @@ namespace CoolEStore.Controllers
             }
 
             var vendorModel = await _context.Vendor
+                .Include(v => v.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {
@@ -46,6 +48,7 @@ namespace CoolEStore.Controllers
         // GET: Vendor/Create
         public IActionResult Create()
         {
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace CoolEStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,PhoneNumber,CAP,Address,StreetNumber")] VendorModel vendorModel)
+        public async Task<IActionResult> Create([Bind("Id,ApplicationUserId")] VendorModel vendorModel)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace CoolEStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address", vendorModel.ApplicationUserId);
             return View(vendorModel);
         }
 
@@ -78,6 +82,7 @@ namespace CoolEStore.Controllers
             {
                 return NotFound();
             }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address", vendorModel.ApplicationUserId);
             return View(vendorModel);
         }
 
@@ -86,7 +91,7 @@ namespace CoolEStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,PhoneNumber,CAP,Address,StreetNumber")] VendorModel vendorModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ApplicationUserId")] VendorModel vendorModel)
         {
             if (id != vendorModel.Id)
             {
@@ -113,6 +118,7 @@ namespace CoolEStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Address", vendorModel.ApplicationUserId);
             return View(vendorModel);
         }
 
@@ -125,6 +131,7 @@ namespace CoolEStore.Controllers
             }
 
             var vendorModel = await _context.Vendor
+                .Include(v => v.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {

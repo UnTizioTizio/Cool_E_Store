@@ -1,4 +1,4 @@
-@model CoolEStore.Models.ShoppingBasketRecordModel
+@model CoolEStore.Models.CustomerModel
 
 @{
     ViewData["Title"] = "Create";
@@ -6,19 +6,15 @@
 
 <h1>Create</h1>
 
-<h4>ShoppingBasketRecordModel</h4>
+<h4>CustomerModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <select asp-for="ProductId" class ="form-control" asp-items="ViewBag.ProductId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <select asp-for="ApplicationUserId" class ="form-control" asp-items="ViewBag.ApplicationUserId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

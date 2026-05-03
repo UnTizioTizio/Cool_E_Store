@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CoolEStore.Models;
 
 [Index(nameof(ApplicationUserId), IsUnique = true)]
-public class UserModel
+public class CustomerModel
 {
     public int Id { get; set; }
 

@@ -17,7 +17,7 @@
             </div>
             <a asp-controller="Vendor" asp-action="Details" asp-route-id="@Model.Vendor.Id">
                 Visit the 
-                @Html.DisplayFor(model => model.Vendor.Name)
+                @* @Html.DisplayFor(model => model.Vendor.Name) *@
                 store
             </a>
             @if(Model.Amount == 0)
