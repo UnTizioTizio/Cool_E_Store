@@ -24,32 +24,32 @@ namespace CoolEStore.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _context.Product
-                .Include(p => p.Vendor)
-                    .ThenInclude(v => v!.WarehouseRecords)
+                .Include(p => p.Vendor).ThenInclude(v => v!.WarehouseRecords)
+                .Include(p => p.Vendor).ThenInclude(v => v!.ApplicationUser)
                 .Include(p => p.Reviews)
                 .AsSplitQuery()
                 .ToListAsync();
 
-            List<ProductViewModel> productViewModel = new List<ProductViewModel>(products.Count);
-            products.ForEach(product => productViewModel.Add(
+            List<ProductViewModel> productViewModels = new List<ProductViewModel>(products.Count);
+            products.ForEach(p => productViewModels.Add(
                 new ProductViewModel
                 {
-                    Id = product.Id,
-                    Name = product.Name,
-                    BasePrice = product.BasePrice,
-                    Discount = product.Discount,
-                    FinalPrice = product.FinalPrice,
-                    Description = product.Description,
-                    Category = product.Category,
-                    Vendor = product.Vendor!,
-                    Reviews = product.Reviews,
-                    Amount = product.Vendor!.WarehouseRecords!
-                                .Where(wr => wr.Id == product.Id)
+                    Id = p.Id,
+                    Name = p.Name,
+                    BasePrice = p.BasePrice,
+                    Discount = p.Discount,
+                    FinalPrice = p.FinalPrice,
+                    Description = p.Description,
+                    Category = p.Category,
+                    Vendor = p.Vendor!,
+                    Reviews = p.Reviews,
+                    Amount = p.Vendor!.WarehouseRecords!
+                                .Where(wr => wr.ProductId == p.Id)
                                 .Select(wr => wr.Amount)
                                 .FirstOrDefault(0)
                 }
             ));
-            return View(productViewModel.GroupBy(p => p.Category));
+            return View(productViewModels.GroupBy(p => p.Category));
         } 
 
         // GET: Product/Details/5
@@ -63,6 +63,8 @@ namespace CoolEStore.Controllers
             var product = await _context.Product
                 .Include(p => p.Vendor)
                     .ThenInclude(v => v!.WarehouseRecords)
+                .Include(p => p.Vendor)
+                    .ThenInclude(v => v!.ApplicationUser)
                 .Include(p => p.Reviews)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
