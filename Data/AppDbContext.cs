@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CoolEStore.Data;
 
-public class AppDbContext : IdentityDbContext<IdentityUser>
+public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole<int>, int>
 {
     public DbSet<ApplicationUserModel> ApplicationUser { get; set; } = default!;
     public DbSet<CustomerModel> Customer { get; set; } = default!;

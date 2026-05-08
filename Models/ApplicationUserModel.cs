@@ -8,10 +8,10 @@ public class ApplicationUserModel : IdentityUser<int>
 {
     [Required]
     [StringLength(5)]
-    public required string CAP { get; set; }
+    public string CAP { get; set; } = null!;
 
     [Required]
-    public required string Address { get; set; }
+    public string Address { get; set; } = null!;
     
     [Required]
     public ushort StreetNumber { get; set; }

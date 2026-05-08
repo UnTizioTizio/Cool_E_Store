@@ -22,7 +22,7 @@ builder.Services.AddAuthentication();
 
 // Add Identity APIs
 builder.Services
-    .AddIdentityApiEndpoints<IdentityUser>()
+    .AddIdentityApiEndpoints<ApplicationUserModel>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -62,6 +62,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<ApplicationUserModel>();
 
 app.Run();
