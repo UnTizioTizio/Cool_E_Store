@@ -25,7 +25,8 @@ builder.Services
     .AddIdentityApiEndpoints<IdentityUser>()
     .AddEntityFrameworkStores<AppDbContext>();
 
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -33,6 +34,11 @@ var app = builder.Build();
 using (var appDbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>())
 {
     appDbContext.Database.EnsureCreated();
+}
+
+if(app.Environment.IsDevelopment())
+{
+    app.UseSwagger().UseSwaggerUI();
 }
 
 // Configure the HTTP request pipeline.
