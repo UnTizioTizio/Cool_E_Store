@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using CoolEStore.Data;
 using CoolEStore.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using CoolEStore.DTOs;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +65,28 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapIdentityApi<ApplicationUserModel>();
+
+app.MapPost("/register", async (
+    UserManager<ApplicationUserModel> userManager,
+    [FromBody] CustomRegisterRequest request) =>
+{
+    var user = new ApplicationUserModel
+    {
+        UserName = request.UserName,
+        Email = request.Email,
+        PhoneNumber = request.PhoneNumber,
+        Address = request.Address,
+        CAP = request.CAP,
+        StreetNumber = request.StreetNumber
+    };
+
+    var result = await userManager.CreateAsync(user, request.Password);
+
+    return result.Succeeded
+        ? Results.Ok(new { Message = "User created" })
+        : Results.BadRequest(result.Errors);
+});
+
+app.MapGroup("/identity-api").MapIdentityApi<ApplicationUserModel>();
 
 app.Run();
