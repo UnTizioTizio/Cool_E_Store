@@ -1,4 +1,4 @@
-@model IEnumerable<CoolEStore.Models.VendorModel>
+@model IEnumerable<CoolEStore.ViewModels.VendorViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser!.UserName)
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser!.Email)
+                @Html.DisplayNameFor(model => model.ApplicationUser.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser!.PhoneNumber)
+                @Html.DisplayNameFor(model => model.ApplicationUser.PhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser!.Address)
+                @Html.DisplayNameFor(model => model.ApplicationUser.Address)
             </th>
             <th></th>
         </tr>
@@ -32,18 +32,18 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser!.UserName)
+                @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser!.Email)
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser!.PhoneNumber)
+                @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser!.Address),
-                @Html.DisplayFor(modelItem => item.ApplicationUser!.StreetNumber) -
-                @Html.DisplayFor(modelItem => item.ApplicationUser!.CAP)
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Address),
+                @Html.DisplayFor(modelItem => item.ApplicationUser.StreetNumber) -
+                @Html.DisplayFor(modelItem => item.ApplicationUser.CAP)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

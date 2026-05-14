@@ -1,0 +1,9 @@
+using CoolEStore.Models;
+
+namespace CoolEStore.ViewModels;
+public class VendorViewModel
+{
+    public int Id { get; set; }
+    public required ApplicationUserModel ApplicationUser { get; set; }
+    public List<WarehouseRecordModel>? WarehouseRecords { get; set; }
+}

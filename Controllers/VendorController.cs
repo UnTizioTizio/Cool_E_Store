@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolEStore.Data;
 using CoolEStore.Models;
+using CoolEStore.ViewModels;
 
 namespace CoolEStore.Controllers
 {
@@ -22,8 +23,14 @@ namespace CoolEStore.Controllers
         // GET: Vendor
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Vendor.Include(v => v.ApplicationUser);
-            return View(await appDbContext.ToListAsync());
+            List<VendorModel> vendorModels = await _context.Vendor
+                .Include(v => v.ApplicationUser)
+                .ToListAsync();
+
+            return View(
+                vendorModels
+                .Select(vm => new VendorViewModel{ Id = vm.Id, ApplicationUser = vm.ApplicationUser!})
+            );
         }
 
         // GET: Vendor/Details/5
@@ -34,15 +41,23 @@ namespace CoolEStore.Controllers
                 return NotFound();
             }
 
-            var vendorModel = await _context.Vendor
+            VendorModel? vendorModel = await _context.Vendor
                 .Include(v => v.ApplicationUser)
+                .Include(v => v.WarehouseRecords!).ThenInclude(wr => wr.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {
                 return NotFound();
             }
 
-            return View(vendorModel);
+            VendorViewModel vendorViewModel = new VendorViewModel
+            {
+                Id = vendorModel.Id,
+                ApplicationUser = vendorModel.ApplicationUser!,
+                WarehouseRecords = vendorModel.WarehouseRecords
+            };
+
+            return View(vendorViewModel);
         }
 
         // GET: Vendor/Create
