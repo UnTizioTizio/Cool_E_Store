@@ -496,3 +496,6 @@ appsettings.*.json
 
 # User secrets
 secrets.json
+
+# Sensitive Data
+SensitiveData/

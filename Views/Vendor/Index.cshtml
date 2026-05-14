@@ -13,16 +13,37 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
+                @Html.DisplayNameFor(model => model.ApplicationUser!.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser!.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser!.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser!.Address)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) 
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Address)
+                @Html.DisplayFor(modelItem => item.ApplicationUser!.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser!.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser!.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser!.Address),
+                @Html.DisplayFor(modelItem => item.ApplicationUser!.StreetNumber) -
+                @Html.DisplayFor(modelItem => item.ApplicationUser!.CAP)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -30,6 +51,6 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
