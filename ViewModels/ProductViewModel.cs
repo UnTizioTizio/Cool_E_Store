@@ -18,6 +18,8 @@ public class ProductViewModel
     public decimal FinalPrice { get; set; }
     
     public string? Description { get; set; }
+    public string? ImageUrl { get; set; }
+    
     public ProductCategory Category { get; set; }
     
     public VendorModel Vendor { get; set; } = null!;
