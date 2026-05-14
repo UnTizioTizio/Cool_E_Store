@@ -15,8 +15,8 @@
         {
             <a class="product-card-link" asp-action="Details" asp-route-id="@item.Id">
                 <div class="product-card mx-3">
-                    <img src="@item.ImageUrl" style="width: 90%;">
-                    <div class="align-items-end mt-5">
+                    <img src="@item.ImageUrl" class="product-card-img">
+                    <div class="align-items-end mt-2">
                         <div>
                             @if(item.Discount == 0)
                             {

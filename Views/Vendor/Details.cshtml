@@ -60,8 +60,8 @@
         {
             <a class="product-card-link" asp-controller="Product" asp-action="Details" asp-route-id="@wr.Product!.Id">
                 <div class="product-card mx-3">
-                    <img src="@wr.Product!.ImageUrl" style="width: 90%;">
-                    <div class="align-items-end mt-5">
+                    <img src="@wr.Product!.ImageUrl" class="product-card-img">
+                    <div class="align-items-end mt-2">
                         <div>
                             @if(wr.Product!.Discount == 0)
                             {
