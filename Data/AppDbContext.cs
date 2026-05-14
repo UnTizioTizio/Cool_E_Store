@@ -66,64 +66,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
     {
         optionsBuilder.UseSeeding((context, _) =>
         {
-            ApplicationUserModel[] applicationUsers =
-            {
-                new ApplicationUserModel
-                {
-                    UserName = "Admin_1",
-                    Email = "admin01@gmail.com",
-                    PasswordHash = "Password",
-                    PhoneNumber = "+397777777777",
-                    CAP = "33019",
-                    Address = "Via Dante",
-                    StreetNumber = 9,
-                    Type = UserType.Customer
-                },
-                new ApplicationUserModel
-                {
-                    UserName = "Admin_2",
-                    Email = "admin02@gmail.com",
-                    PasswordHash = "Password",
-                    PhoneNumber = "+394564564567",
-                    CAP = "94019",
-                    Address = "Via Umberto I",
-                    StreetNumber = 95,
-                    Type = UserType.Customer
-                },
-                new ApplicationUserModel
-                {
-                    UserName = "Absolute Cinema",
-                    Email = "absolute.cinema@gmail.com",
-                    PasswordHash = "pipopa",
-                    PhoneNumber = "+393052165619",
-                    CAP = "47012",
-                    Address = "Via Bartolomeo II",
-                    StreetNumber = 37,
-                    Type = UserType.Vendor
-                },
-                new ApplicationUserModel
-                {
-                    UserName = "Power Gaming",
-                    Email = "pwrgaming@gmail.com",
-                    PasswordHash = "pipopa",
-                    PhoneNumber = "+39327723416",
-                    CAP = "37045",
-                    Address = "Corso Buenos Aires",
-                    StreetNumber = 2,
-                    Type = UserType.Vendor
-                },
-                new ApplicationUserModel
-                {
-                    UserName = "Booking Smart",
-                    Email = "booking.smart@gmail.com",
-                    PasswordHash = "pipopa",
-                    PhoneNumber = "+390964254011",
-                    CAP = "44797",
-                    Address = "Via Garibaldi",
-                    StreetNumber = 246,
-                    Type = UserType.Vendor
-                }
-            };
+            ApplicationUserModel[] applicationUsers = SeedUsers.GetSeededUsers().ToArray();
 
             VendorModel[] vendors =
             {
@@ -138,6 +81,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                 new CustomerModel{ ApplicationUser = applicationUsers[1] }
             };
 
+            const string PRODUCT_IMAGE_PATH = "/images/products/";
             ProductModel[] products =
             {
 /* ========================== Videogames ========================== */
@@ -147,6 +91,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     BasePrice = 20.99m,
                     Discount = 14,
                     Description = "Best videogame ever made",
+                    ImageUrl = PRODUCT_IMAGE_PATH + "twilight_princess.jpg",
                     Category = ProductCategory.Videogames,
                     Vendor = vendors[1]
                 },
@@ -155,6 +100,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     Name = "Dark Souls REMASTERED",
                     BasePrice = 45.99m,
                     Discount = 20,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "dark_souls_remastered.jpg",
                     Category = ProductCategory.Videogames,
                     Vendor = vendors[1]
                 },
@@ -164,6 +110,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     BasePrice = 49.99m,
                     Discount = 0,
                     Description = "PEAK.",
+                    ImageUrl = PRODUCT_IMAGE_PATH + "cyberpunk_2077.jpg",
                     Category = ProductCategory.Videogames,
                     Vendor = vendors[1]
                 },
@@ -173,6 +120,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     BasePrice = 24.99m,
                     Discount = 8,
                     Description = "A fantastic space journey awaits you",
+                    ImageUrl = PRODUCT_IMAGE_PATH + "outer_wilds.jpg",
                     Category = ProductCategory.Videogames,
                     Vendor = vendors[1]
                 },
@@ -182,6 +130,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     BasePrice = 19.99m,
                     Discount = 13,
                     Description = "Very cute, also very dark",
+                    ImageUrl = PRODUCT_IMAGE_PATH + "hollow_knight_silksong.jpg",
                     Category = ProductCategory.Videogames,
                     Vendor = vendors[1]
                 },
@@ -190,6 +139,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                 {
                     Name = "Inglourious Basterds",
                     BasePrice = 9.99m,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "inglourious_basterds.jpg",
                     Category = ProductCategory.Movies,
                     Vendor = vendors[0]
                 },
@@ -198,6 +148,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     Name = "Cast Away",
                     BasePrice = 9.99m,
                     Discount = 4,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "cast_away.jpg",
                     Category = ProductCategory.Movies,
                     Vendor = vendors[0]
                 },
@@ -205,6 +156,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                 {
                     Name = "Interstellar",
                     BasePrice = 13.99m,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "interstellar.jpg",
                     Category = ProductCategory.Movies,
                     Vendor = vendors[0]
                 },
@@ -213,6 +165,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     Name = "The Truman Show",
                     BasePrice = 8.59m,
                     Discount = 5,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "the_truman_show.jpg",
                     Category = ProductCategory.Movies,
                     Vendor = vendors[0]
                 },
@@ -221,6 +174,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     Name = "Fight Club",
                     BasePrice = 9.99m,
                     Discount = 7,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "fight_club.jpg",
                     Category = ProductCategory.Movies,
                     Vendor = vendors[0]
                 },
@@ -229,6 +183,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                 {
                     Name = "1984",
                     BasePrice = 11.87m,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "1984.jpg",
                     Category = ProductCategory.Books,
                     Vendor = vendors[2]
                 },
@@ -237,15 +192,17 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     Name = "Blood Meridian",
                     BasePrice = 15.49m,
                     Discount = 13,
+                    ImageUrl = PRODUCT_IMAGE_PATH + "blood_meridian.jpg",
                     Category = ProductCategory.Books,
                     Vendor = vendors[2]
                 },
                 new ProductModel
                 {
-                    Name = "C# 14 in a Nutshell",
+                    Name = "C# 12 in a Nutshell",
                     BasePrice = 60.22m,
                     Discount = 22,
-                    Description = "This book is a must-have if you want to learn C# in 2026",
+                    Description = "This book is a must-have if you want to learn C# in 2023",
+                    ImageUrl = PRODUCT_IMAGE_PATH + "c_sharp_12.jpg",
                     Category = ProductCategory.Books,
                     Vendor = vendors[2]
                 },
@@ -258,6 +215,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                     helping you to develop new and innovative games that will be played again and again. It 
                     explains the fundamental principles of game design and demonstrates how tactics used in 
                     classic board, card and athletic games also work in top-quality video games.",
+                    ImageUrl = PRODUCT_IMAGE_PATH + "the_art_of_game_design.jpg",
                     Category = ProductCategory.Books,
                     Vendor = vendors[2]
                 },
