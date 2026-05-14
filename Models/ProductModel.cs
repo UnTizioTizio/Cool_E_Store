@@ -24,6 +24,8 @@ public class ProductModel
     
     public string? Description { get; set; }
     
+    public string? ImageUrl { get; set; }
+
     [Required]
     public ProductCategory Category { get; set; }
     
