@@ -56,36 +56,36 @@
     <hr>
     <h3 class="mt-3">Products</h3>
     <section class="product-card-container">
-        @foreach(var wr in Model.WarehouseRecords!)
+        @foreach(var p in Model.ProductViewModels!)
         {
-            <a class="product-card-link" asp-controller="Product" asp-action="Details" asp-route-id="@wr.Product!.Id">
+            <a class="product-card-link" asp-controller="Product" asp-action="Details" asp-route-id="@p.Id">
                 <div class="product-card mx-3">
-                    <img src="@wr.Product!.ImageUrl" class="product-card-img">
+                    <img src="@p.ImageUrl" class="product-card-img">
                     <div class="align-items-end mt-2">
                         <div>
-                            @if(wr.Product!.Discount == 0)
+                            @if(p.Discount == 0)
                             {
                                 <span class="fs-4 fw-bold">
-                                    @Html.DisplayFor(modelItem => wr.Product!.BasePrice)
+                                    @Html.DisplayFor(modelItem => p.BasePrice)
                                 </span> 
                             }
                             else
                             {
                                 <span class="fs-4 fw-bold">
-                                    @Html.DisplayFor(modelItem => wr.Product!.FinalPrice)
+                                    @Html.DisplayFor(modelItem => p.FinalPrice)
                                 </span>
                                 <span class="fw-light text-decoration-line-through">
-                                    @Html.DisplayFor(modelItem => wr.Product!.BasePrice)
+                                    @Html.DisplayFor(modelItem => p.BasePrice)
                                 </span>
                                 <span class="fw-bold text-danger">
-                                    (@Html.DisplayFor(modelItem => wr.Product!.Discount))
+                                    (@Html.DisplayFor(modelItem => p.Discount))
                                 </span>
                             }
                         </div>
-                        <div class="fs-5">@wr.Product!.Name</div>
+                        <div class="fs-5">@p.Name</div>
                         <div class="align-items-end">
-                            <div class="fs-6 mt-1">@wr.Product!.Vendor!.ApplicationUser!.UserName</div>
-                            @* <div>@wr.Product!.AvgReviews/5 (@wr.Product!.NumReviews)</div> *@
+                            <div class="fs-6 mt-1">@p.Vendor!.ApplicationUser!.UserName</div>
+                            <div>@p.AvgReviews/5 (@p.NumReviews)</div>
                         </div>
                     </div>
                 </div>

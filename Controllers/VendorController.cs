@@ -43,7 +43,7 @@ namespace CoolEStore.Controllers
 
             VendorModel? vendorModel = await _context.Vendor
                 .Include(v => v.ApplicationUser)
-                .Include(v => v.WarehouseRecords!).ThenInclude(wr => wr.Product)
+                .Include(v => v.Products!).ThenInclude(p => p.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendorModel == null)
             {
@@ -54,8 +54,24 @@ namespace CoolEStore.Controllers
             {
                 Id = vendorModel.Id,
                 ApplicationUser = vendorModel.ApplicationUser!,
-                WarehouseRecords = vendorModel.WarehouseRecords
+                ProductViewModels = new List<ProductViewModel>(vendorModel.Products!.Count)
             };
+
+            vendorModel.Products!.ForEach(p => vendorViewModel.ProductViewModels!.Add(
+                new ProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    BasePrice = p.BasePrice,
+                    Discount = p.Discount,
+                    FinalPrice = p.FinalPrice,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    Category = p.Category,
+                    Vendor = vendorModel,
+                    Reviews = p.Reviews
+                }
+            ));
 
             return View(vendorViewModel);
         }
