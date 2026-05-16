@@ -1,0 +1,38 @@
+@model CoolEStore.ViewModels.ProductViewModel
+
+<a class="product-card-link" asp-action="Details" asp-route-id="@Model.Id">
+    <div class="product-card mx-3">
+        <img src="@Model.ImageUrl" class="product-card-img">
+        <div class="align-items-end mt-2">
+            <div>
+                @if(Model.Discount == 0)
+                {
+                    <span class="fs-4 fw-bold">
+                        @Html.DisplayFor(modelItem => Model.BasePrice)
+                    </span> 
+                }
+                else
+                {
+                    <span class="fs-4 fw-bold">
+                        @Html.DisplayFor(modelItem => Model.FinalPrice)
+                    </span>
+                    <span class="fw-light text-decoration-line-through">
+                        @Html.DisplayFor(modelItem => Model.BasePrice)
+                    </span>
+                    <span class="fw-bold text-danger">
+                        (@Html.DisplayFor(modelItem => Model.Discount))
+                    </span>
+                }
+            </div>
+            <div class="fs-5">@Model.Name</div>
+            <div class="align-items-end">
+                <div class="fs-6 mt-1">
+                    <a asp-controller="Vendor" asp-action="Details" asp-route-id="@Model.Vendor.Id">
+                        @Model.Vendor!.ApplicationUser!.UserName
+                    </a>
+                </div>
+                <div>@Model.AvgReviews/5 (@Model.NumReviews)</div>
+            </div>
+        </div>
+    </div>
+</a>

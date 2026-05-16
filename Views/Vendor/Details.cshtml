@@ -46,50 +46,13 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ApplicationUser!.CAP)
         </dd>
-        @* <ul>
-            @foreach(var wr in Model.WarehouseRecords!)
-            {
-                <li>@wr.Product.Name | @wr.Product.FinalPrice | @wr.Amount</li>
-            }
-        </ul> *@
     </dl>
     <hr>
     <h3 class="mt-3">Products</h3>
-    <section class="product-card-container">
-        @foreach(var p in Model.ProductViewModels!)
+    <section class="product-card-container mb-5">
+        @foreach(var product in Model.ProductViewModels!)
         {
-            <a class="product-card-link" asp-controller="Product" asp-action="Details" asp-route-id="@p.Id">
-                <div class="product-card mx-3">
-                    <img src="@p.ImageUrl" class="product-card-img">
-                    <div class="align-items-end mt-2">
-                        <div>
-                            @if(p.Discount == 0)
-                            {
-                                <span class="fs-4 fw-bold">
-                                    @Html.DisplayFor(modelItem => p.BasePrice)
-                                </span> 
-                            }
-                            else
-                            {
-                                <span class="fs-4 fw-bold">
-                                    @Html.DisplayFor(modelItem => p.FinalPrice)
-                                </span>
-                                <span class="fw-light text-decoration-line-through">
-                                    @Html.DisplayFor(modelItem => p.BasePrice)
-                                </span>
-                                <span class="fw-bold text-danger">
-                                    (@Html.DisplayFor(modelItem => p.Discount))
-                                </span>
-                            }
-                        </div>
-                        <div class="fs-5">@p.Name</div>
-                        <div class="align-items-end">
-                            <div class="fs-6 mt-1">@p.Vendor!.ApplicationUser!.UserName</div>
-                            <div>@p.AvgReviews/5 (@p.NumReviews)</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+            <partial name="_ProductCard" model="@product"/>
         }
     </section>
 </div>
