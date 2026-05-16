@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+                @Html.DisplayNameFor(model => model.ApplicationUserViewModel.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+                @Html.DisplayNameFor(model => model.ApplicationUserViewModel.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser.PhoneNumber)
+                @Html.DisplayNameFor(model => model.ApplicationUserViewModel.PhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser.Address)
+                @Html.DisplayNameFor(model => model.ApplicationUserViewModel.Address)
             </th>
             <th></th>
         </tr>
@@ -32,18 +32,18 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+                @Html.DisplayFor(modelItem => item.ApplicationUserViewModel.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+                @Html.DisplayFor(modelItem => item.ApplicationUserViewModel.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
+                @Html.DisplayFor(modelItem => item.ApplicationUserViewModel.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Address),
-                @Html.DisplayFor(modelItem => item.ApplicationUser.StreetNumber) -
-                @Html.DisplayFor(modelItem => item.ApplicationUser.CAP)
+                @Html.DisplayFor(modelItem => item.ApplicationUserViewModel.Address),
+                @Html.DisplayFor(modelItem => item.ApplicationUserViewModel.StreetNumber) -
+                @Html.DisplayFor(modelItem => item.ApplicationUserViewModel.CAP)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

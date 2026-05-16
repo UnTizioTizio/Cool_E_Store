@@ -4,6 +4,6 @@ namespace CoolEStore.ViewModels;
 public class VendorViewModel
 {
     public int Id { get; set; }
-    public required ApplicationUserModel ApplicationUser { get; set; }
+    public required ApplicationUserViewModel ApplicationUserViewModel { get; set; }
     public List<ProductViewModel>? ProductViewModels { get; set; }
 }

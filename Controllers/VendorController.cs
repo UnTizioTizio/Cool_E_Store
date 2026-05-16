@@ -27,10 +27,22 @@ namespace CoolEStore.Controllers
                 .Include(v => v.ApplicationUser)
                 .ToListAsync();
 
-            return View(
-                vendorModels
-                .Select(vm => new VendorViewModel{ Id = vm.Id, ApplicationUser = vm.ApplicationUser!})
-            );
+            var vendorViewModels = vendorModels.Select(v => new VendorViewModel
+            { 
+                Id = v.Id, 
+                ApplicationUserViewModel = new ApplicationUserViewModel
+                {
+                    UserName = v.ApplicationUser!.UserName!,
+                    Email = v.ApplicationUser!.Email!,
+                    PhoneNumber = v.ApplicationUser!.PhoneNumber!,
+                    CAP = v.ApplicationUser!.CAP,
+                    Address = v.ApplicationUser!.Address,
+                    StreetNumber = v.ApplicationUser!.StreetNumber,
+                    Type = v.ApplicationUser!.Type
+                }
+            });
+
+            return View(vendorViewModels);
         }
 
         // GET: Vendor/Details/5
@@ -53,7 +65,16 @@ namespace CoolEStore.Controllers
             VendorViewModel vendorViewModel = new VendorViewModel
             {
                 Id = vendorModel.Id,
-                ApplicationUser = vendorModel.ApplicationUser!,
+                ApplicationUserViewModel = new ApplicationUserViewModel
+                {
+                    UserName = vendorModel.ApplicationUser!.UserName!,
+                    Email = vendorModel.ApplicationUser!.Email!,
+                    PhoneNumber = vendorModel.ApplicationUser!.PhoneNumber!,
+                    CAP = vendorModel.ApplicationUser!.CAP,
+                    Address = vendorModel.ApplicationUser!.Address,
+                    StreetNumber = vendorModel.ApplicationUser!.StreetNumber,
+                    Type = vendorModel.ApplicationUser!.Type
+                },
                 ProductViewModels = new List<ProductViewModel>(vendorModel.Products!.Count)
             };
 
