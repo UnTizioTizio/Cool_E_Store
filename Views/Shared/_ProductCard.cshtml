@@ -1,6 +1,6 @@
 @model CoolEStore.ViewModels.ProductViewModel
 
-<a class="product-card-link" asp-action="Details" asp-route-id="@Model.Id">
+<a class="product-card-link" asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id">
     <div class="product-card mx-3">
         <img src="@Model.ImageUrl" class="product-card-img">
         <div class="align-items-end mt-2">
