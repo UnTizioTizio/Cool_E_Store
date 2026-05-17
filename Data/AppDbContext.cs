@@ -52,9 +52,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUserModel, IdentityRole
                 t => (UserType)Enum.Parse(typeof(UserType), t)
             );
 
-        applicationUserModel
-            .HasIndex(a => new {a.Email, a.PhoneNumber})
-            .IsUnique();
+        applicationUserModel.HasIndex(a => a.Email).IsUnique();
+        applicationUserModel.HasIndex(a => a.PhoneNumber).IsUnique();
         
         applicationUserModel.Property(a => a.Email).IsRequired();
         applicationUserModel.Property(a => a.UserName).IsRequired();
